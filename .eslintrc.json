@@ -23,6 +23,7 @@
       },
     "rules": {
         "no-console": 0,
+        "consistent-return": 0,
         "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
         "object-curly-newline": ["error", { "multiline": true }],
         "import/extensions": [
