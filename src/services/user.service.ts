@@ -1,8 +1,7 @@
-/* eslint-disable import/prefer-default-export */
 import argon from 'argon2';
 import UserModel from '../models/user.model';
-import { IUser } from '../interfaces';
-import jwtGenerator from '../utils/jwtGenerator';
+import { ILogin, IUser } from '../utils/interfaces';
+import jwtGenerator from '../helpers/jwtGenerator';
 
 export const createUser = async (userData: IUser) => {
   const { email, name, password } = userData;
@@ -15,4 +14,16 @@ export const createUser = async (userData: IUser) => {
 
   return result ? { code: 201, data: { token: jwtGenerator({ email, name }) } }
     : { code: 409, data: { message: 'User already registered' } };
+};
+
+export const login = async (credentials: ILogin) => {
+  const { email, password } = credentials;
+
+  const user = await UserModel.findOne({ email });
+
+  if (!user || !(await argon.verify(user.password, password))) {
+    return { code: 400, data: { message: 'Invalid credentials' } };
+  }
+
+  return { code: 200, data: { token: jwtGenerator({ email: user.email, name: user.name }) } };
 };
