@@ -8,3 +8,8 @@ export interface ILogin {
   email: string;
   password: string;
 }
+
+export interface ITokenData {
+  email: string;
+  name: string;
+}

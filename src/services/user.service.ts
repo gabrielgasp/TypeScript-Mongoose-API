@@ -27,3 +27,15 @@ export const login = async (credentials: ILogin) => {
 
   return { code: 200, data: { token: jwtGenerator({ email: user.email, name: user.name }) } };
 };
+
+export const listUsers = async () => {
+  const users = await UserModel.find({}, '-_id name email');
+
+  return { code: 200, data: users };
+};
+
+export const getUserById = async (id: string) => {
+  const user = await UserModel.findById(id, 'name email');
+
+  return user ? { code: 200, data: user } : { code: 404, data: { message: 'User does not exist' } };
+};

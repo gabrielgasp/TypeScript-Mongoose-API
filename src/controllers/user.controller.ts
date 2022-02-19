@@ -29,3 +29,23 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
     return next(e);
   }
 };
+
+export const listUsers = async (_req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { code, data } = await UserServices.listUsers();
+
+    return res.status(code).json(data);
+  } catch (e) {
+    return next(e);
+  }
+};
+
+export const getUserById = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { code, data } = await UserServices.getUserById(req.params.id);
+
+    return res.status(code).json(data);
+  } catch (e) {
+    return next(e);
+  }
+};
