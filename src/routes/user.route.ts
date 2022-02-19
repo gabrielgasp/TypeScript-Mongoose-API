@@ -16,14 +16,19 @@ UserRouter.post( // LOG IN WITH USER CREDENTIALS (EMAIL & PASSWORD)
 
 UserRouter.use(auth); // AUTHENTICATE REQUESTS. FROM HERE ALL ENDPOINTS REQUIRE JWT TOKEN
 
-UserRouter.get( // GET AN USER BASED ON ID PROVIDED IN URL
-  '/:id',
-  UserControllers.getUserById,
-);
-
 UserRouter.get( // LIST ALL USERS
   '/list',
   UserControllers.listUsers,
+);
+
+UserRouter.get( // SEARCH USERS BY NAME (DOES NOT REQUIRE EXACT MATCH)
+  '/search',
+  UserControllers.searchUsersByName,
+);
+
+UserRouter.get( // GET AN USER BASED ON ID PROVIDED IN URL
+  '/:id',
+  UserControllers.getUserById,
 );
 
 export default UserRouter;

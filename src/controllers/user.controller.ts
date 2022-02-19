@@ -49,3 +49,15 @@ export const getUserById = async (req: Request, res: Response, next: NextFunctio
     return next(e);
   }
 };
+
+export const searchUsersByName = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const name = req.query.name ? req.query.name as string : '';
+
+    const { code, data } = await UserServices.searchUsersByName(name);
+
+    return res.status(code).json(data);
+  } catch (e) {
+    return next(e);
+  }
+};

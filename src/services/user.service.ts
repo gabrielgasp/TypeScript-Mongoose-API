@@ -39,3 +39,9 @@ export const getUserById = async (id: string) => {
 
   return user ? { code: 200, data: user } : { code: 404, data: { message: 'User does not exist' } };
 };
+
+export const searchUsersByName = async (name: string) => {
+  const users = await UserModel.find({ name: new RegExp(name, 'i') }, '-_id name email');
+
+  return { code: 200, data: users };
+};
