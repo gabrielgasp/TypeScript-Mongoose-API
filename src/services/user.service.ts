@@ -64,3 +64,9 @@ export const updateSelf = async (id: Types.ObjectId, data: IUpdateUser) => {
 
   return { code: 200, data: { message: 'User successfully updated' } };
 };
+
+export const deleteSelf = async (id: Types.ObjectId) => {
+  await UserModel.findByIdAndDelete(id);
+
+  return { code: 200, data: { message: 'User successfully deleted' } };
+};

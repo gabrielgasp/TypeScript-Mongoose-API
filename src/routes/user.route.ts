@@ -36,4 +36,9 @@ UserRouter.put( // UPDATE USER INFORMATION (USER ID COMES FROM JWT TOKEN PAYLOAD
   UserControllers.updateSelf,
 );
 
+UserRouter.delete( // DELETE USER (USER ID COMES FROM JWT TOKEN PAYLOAD)
+  '/delete',
+  UserControllers.deleteSelf,
+);
+
 export default UserRouter;

@@ -75,3 +75,13 @@ export const updateSelf = async (req: Request, res: Response, next: NextFunction
     return next(e);
   }
 };
+
+export const deleteSelf = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { code, data } = await UserServices.deleteSelf(req.tokenData!.id);
+
+    return res.status(code).json(data);
+  } catch (e) {
+    return next(e);
+  }
+};
