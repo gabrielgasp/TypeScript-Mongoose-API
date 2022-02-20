@@ -48,7 +48,7 @@ export const searchUsersByName = async (name: string) => {
 };
 
 export const updateSelf = async (id: Types.ObjectId, data: IUpdateUser) => {
-  const updateResponse = await UserModel.updateOne({ _id: id }, data)
+  const updateResponse = await UserModel.findByIdAndUpdate(id, data)
     .catch((e) => mongooseValidationHandler(e));
 
   if ('code' in updateResponse) return { code: updateResponse.code, data: updateResponse.data };
