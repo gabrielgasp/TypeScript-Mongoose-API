@@ -3,13 +3,12 @@ import argon from 'argon2';
 import UserModel from '../models/user.model';
 import { ILogin, IUpdateUser, IUser } from '../utils/interfaces';
 import jwtGenerator from '../helpers/jwtGenerator';
+import mongooseValidationHandler from '../helpers/mongooseValidationHandler';
 
 export const createUser = async (userData: IUser) => {
-  const newUser = await UserModel.create(userData).catch((e) => {
-    if (e.message.includes('duplicate key error')) return null;
-  });
+  const newUser = await UserModel.create(userData).catch((e) => mongooseValidationHandler(e));
 
-  if (!newUser) return { code: 409, data: { message: 'User already registered' } };
+  if ('code' in newUser) return { code: newUser.code, data: newUser.data };
 
   const token = jwtGenerator({ id: newUser._id, email: newUser.email, name: newUser.name });
 
@@ -49,11 +48,10 @@ export const searchUsersByName = async (name: string) => {
 };
 
 export const updateSelf = async (id: Types.ObjectId, data: IUpdateUser) => {
-  const updateResponse = await UserModel.updateOne({ _id: id }, data).catch((e) => {
-    if (e.message.includes('duplicate key error')) return null;
-  });
+  const updateResponse = await UserModel.updateOne({ _id: id }, data)
+    .catch((e) => mongooseValidationHandler(e));
 
-  if (!updateResponse) return { code: 409, data: { message: 'This email is already registered' } };
+  if ('code' in updateResponse) return { code: updateResponse.code, data: updateResponse.data };
 
   return { code: 200, data: { message: 'User successfully updated' } };
 };

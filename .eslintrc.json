@@ -33,6 +33,7 @@
             { "js": "never", "jsx": "never", "ts": "never", "tsx": "never" }
          ],
          "func-names": 0,
-         "prefer-arrow-callback": 0
+         "prefer-arrow-callback": 0,
+         "import/no-extraneous-dependencies": 0
     }
 }

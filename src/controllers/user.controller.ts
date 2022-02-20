@@ -1,13 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import * as joiSchemas from '../utils/joi.schemas';
 import * as UserServices from '../services/user.service';
 
 export const createUser = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { error } = joiSchemas.user.validate(req.body);
-
-    if (error) return res.status(400).json({ message: error.message });
-
     const { code, data } = await UserServices.createUser(req.body);
 
     return res.status(code).json(data);
@@ -60,10 +55,6 @@ export const searchUsersByName = async (req: Request, res: Response, next: NextF
 
 export const updateSelf = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { error } = joiSchemas.updateUser.validate(req.body);
-
-    if (error) return res.status(400).json({ message: error.message });
-
     const { code, data } = await UserServices.updateSelf(req.tokenData!.id, req.body);
 
     return res.status(code).json(data);

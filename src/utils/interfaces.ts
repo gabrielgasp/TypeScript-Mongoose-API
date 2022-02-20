@@ -22,3 +22,8 @@ export interface ITokenData {
   email: string;
   name: string;
 }
+
+export interface IValidationResponse {
+  code: number;
+  data: {[k: string]: string}
+}
