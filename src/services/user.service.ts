@@ -5,17 +5,13 @@ import { ILogin, IUpdateUser, IUser } from '../utils/interfaces';
 import jwtGenerator from '../helpers/jwtGenerator';
 
 export const createUser = async (userData: IUser) => {
-  const { email, name, password } = userData;
-
-  const hash = await argon.hash(password);
-
-  const newUser = await UserModel.create({ email, name, password: hash }).catch((e) => {
+  const newUser = await UserModel.create(userData).catch((e) => {
     if (e.message.includes('duplicate key error')) return null;
   });
 
   if (!newUser) return { code: 409, data: { message: 'User already registered' } };
 
-  const token = jwtGenerator({ id: newUser._id, email, name });
+  const token = jwtGenerator({ id: newUser._id, email: newUser.email, name: newUser.name });
 
   return { code: 201, data: { token } };
 };
@@ -53,14 +49,7 @@ export const searchUsersByName = async (name: string) => {
 };
 
 export const updateSelf = async (id: Types.ObjectId, data: IUpdateUser) => {
-  const { password } = data;
-
-  if (password) {
-    const hash = await argon.hash(password);
-    await UserModel.findByIdAndUpdate(id, { ...data, password: hash }, { new: true });
-  } else {
-    await UserModel.findByIdAndUpdate(id, data, { new: true });
-  }
+  await UserModel.updateOne({ _id: id }, data);
 
   return { code: 200, data: { message: 'User successfully updated' } };
 };

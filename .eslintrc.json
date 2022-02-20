@@ -31,6 +31,8 @@
             "error",
             "ignorePackages",
             { "js": "never", "jsx": "never", "ts": "never", "tsx": "never" }
-         ]
+         ],
+         "func-names": 0,
+         "prefer-arrow-callback": 0
     }
 }
