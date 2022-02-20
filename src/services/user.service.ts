@@ -9,7 +9,7 @@ export const createUser = async (userData: IUser) => {
     if (e.message.includes('duplicate key error')) return null;
   });
 
-  if (!newUser) return { code: 409, data: { message: 'User already registered' } };
+  if (!newUser) return { code: 409, data: { message: 'This email is already registered' } };
 
   const token = jwtGenerator({ id: newUser._id, email: newUser.email, name: newUser.name });
 
@@ -49,7 +49,7 @@ export const searchUsersByName = async (name: string) => {
 };
 
 export const updateSelf = async (id: Types.ObjectId, data: IUpdateUser) => {
-  const updateResponse = await UserModel.updateOne({ _id: id }, data).catch((e) => {
+  const updateResponse = await UserModel.findByIdAndUpdate(id, data).catch((e) => {
     if (e.message.includes('duplicate key error')) return null;
   });
 
