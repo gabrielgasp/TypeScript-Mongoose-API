@@ -1,10 +1,14 @@
-import connect from '../database/connection';
+import dbConnect from '../database/connection';
 import app from './app';
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, async () => {
-  console.log(`Server is running on ${PORT}`);
+const start = async () => {
+  await dbConnect();
 
-  await connect();
-});
+  app.listen(PORT, async () => {
+    console.log(`Server is running on ${PORT}`);
+  });
+};
+
+start();
