@@ -49,7 +49,11 @@ export const searchUsersByName = async (name: string) => {
 };
 
 export const updateSelf = async (id: Types.ObjectId, data: IUpdateUser) => {
-  await UserModel.updateOne({ _id: id }, data);
+  const updateResponse = await UserModel.updateOne({ _id: id }, data).catch((e) => {
+    if (e.message.includes('duplicate key error')) return null;
+  });
+
+  if (!updateResponse) return { code: 409, data: { message: 'This email is already registered' } };
 
   return { code: 200, data: { message: 'User successfully updated' } };
 };
