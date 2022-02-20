@@ -31,4 +31,9 @@ UserRouter.get( // GET AN USER BASED ON ID PROVIDED IN URL
   UserControllers.getUserById,
 );
 
+UserRouter.put( // UPDATE USER INFORMATION (USER ID COMES FROM JWT TOKEN PAYLOAD)
+  '/update',
+  UserControllers.updateSelf,
+);
+
 export default UserRouter;

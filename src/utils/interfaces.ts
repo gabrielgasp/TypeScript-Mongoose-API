@@ -1,7 +1,15 @@
+import { Types } from 'mongoose';
+
 export interface IUser {
   email: string;
   name: string;
   password: string;
+}
+
+export interface IUpdateUser {
+  email?: string;
+  name?: string;
+  password?: string;
 }
 
 export interface ILogin {
@@ -10,6 +18,7 @@ export interface ILogin {
 }
 
 export interface ITokenData {
+  id: Types.ObjectId;
   email: string;
   name: string;
 }

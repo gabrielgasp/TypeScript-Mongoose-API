@@ -1,6 +1,7 @@
+import { Types } from 'mongoose';
 import argon from 'argon2';
 import UserModel from '../models/user.model';
-import { ILogin, IUser } from '../utils/interfaces';
+import { ILogin, IUpdateUser, IUser } from '../utils/interfaces';
 import jwtGenerator from '../helpers/jwtGenerator';
 
 export const createUser = async (userData: IUser) => {
@@ -8,12 +9,15 @@ export const createUser = async (userData: IUser) => {
 
   const hash = await argon.hash(password);
 
-  const result = await UserModel.create({ email, name, password: hash }).catch((e) => {
+  const newUser = await UserModel.create({ email, name, password: hash }).catch((e) => {
     if (e.message.includes('duplicate key error')) return null;
   });
 
-  return result ? { code: 201, data: { token: jwtGenerator({ email, name }) } }
-    : { code: 409, data: { message: 'User already registered' } };
+  if (!newUser) return { code: 409, data: { message: 'User already registered' } };
+
+  const token = jwtGenerator({ id: newUser._id, email, name });
+
+  return { code: 201, data: { token } };
 };
 
 export const login = async (credentials: ILogin) => {
@@ -25,7 +29,9 @@ export const login = async (credentials: ILogin) => {
     return { code: 400, data: { message: 'Invalid credentials' } };
   }
 
-  return { code: 200, data: { token: jwtGenerator({ email: user.email, name: user.name }) } };
+  const token = jwtGenerator({ id: user._id, email: user.email, name: user.name });
+
+  return { code: 200, data: { token } };
 };
 
 export const listUsers = async () => {
@@ -44,4 +50,17 @@ export const searchUsersByName = async (name: string) => {
   const users = await UserModel.find({ name: new RegExp(name, 'i') }, '-_id name email');
 
   return { code: 200, data: users };
+};
+
+export const updateSelf = async (id: Types.ObjectId, data: IUpdateUser) => {
+  const { password } = data;
+
+  if (password) {
+    const hash = await argon.hash(password);
+    await UserModel.findByIdAndUpdate(id, { ...data, password: hash }, { new: true });
+  } else {
+    await UserModel.findByIdAndUpdate(id, data, { new: true });
+  }
+
+  return { code: 200, data: { message: 'User successfully updated' } };
 };

@@ -31,3 +31,18 @@ export const login = Joi.object({
     'any.required': '"password" is required',
   }),
 });
+
+export const updateUser = Joi.object({
+  email: Joi.string().email().messages({
+    'string.base': '"email" must be a string',
+    'string.email': '"email" must be a valid email',
+  }),
+  name: Joi.string().min(3).messages({
+    'string.base': '"name" must be a string',
+    'string.min': '"name" length must be at least 3 characters long',
+  }),
+  password: Joi.string().min(6).messages({
+    'string.base': '"password" must be a string',
+    'string.min': '"password" length must be 6 characters long',
+  }),
+});

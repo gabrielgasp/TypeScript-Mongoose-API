@@ -61,3 +61,17 @@ export const searchUsersByName = async (req: Request, res: Response, next: NextF
     return next(e);
   }
 };
+
+export const updateSelf = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { error } = joiSchemas.updateUser.validate(req.body);
+
+    if (error) return res.status(400).json({ message: error.message });
+
+    const { code, data } = await UserServices.updateSelf(req.tokenData!.id, req.body);
+
+    return res.status(code).json(data);
+  } catch (e) {
+    return next(e);
+  }
+};
