@@ -17,12 +17,12 @@ export const createUser = async (userData: IUser) => {
 };
 
 export const login = async (credentials: ILogin) => {
-  const { email, password } = credentials;
+  const { email = '', password = '' } = credentials;
 
   const user = await UserModel.findOne({ email });
 
   if (!user || !(await argon.verify(user.password, password))) {
-    return { code: 400, data: { message: 'Invalid credentials' } };
+    return { code: 400, data: { message: 'Invalid login credentials' } };
   }
 
   const token = jwtGenerator({ id: user._id, email: user.email, name: user.name });

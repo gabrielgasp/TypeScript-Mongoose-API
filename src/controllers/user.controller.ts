@@ -18,10 +18,6 @@ export const createUser = async (req: Request, res: Response, next: NextFunction
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { error } = joiSchemas.login.validate(req.body);
-
-    if (error) return res.status(400).json({ message: error.message });
-
     const { code, data } = await UserServices.login(req.body);
 
     return res.status(code).json(data);
