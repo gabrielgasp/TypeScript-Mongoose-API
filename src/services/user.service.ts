@@ -22,7 +22,7 @@ export const login = async (credentials: ILogin) => {
   const user = await UserModel.findOne({ email });
 
   if (!user || !(await argon.verify(user.password, password))) {
-    return { code: 400, data: { message: 'Invalid login credentials' } };
+    return { code: 401, data: { message: 'Invalid login credentials' } };
   }
 
   const token = jwtGenerator({ id: user._id, email: user.email, name: user.name });
