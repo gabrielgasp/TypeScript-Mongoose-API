@@ -13,7 +13,7 @@ export const user = Joi.object({
   }),
   password: Joi.string().min(6).required().messages({
     'string.base': '"password" must be a string',
-    'string.min': '"password" length must be 6 characters long',
+    'string.min': '"password" length must be at least 6 characters long',
     'any.required': '"password" is required',
   }),
 });
@@ -43,6 +43,6 @@ export const updateUser = Joi.object({
   }),
   password: Joi.string().min(6).messages({
     'string.base': '"password" must be a string',
-    'string.min': '"password" length must be 6 characters long',
+    'string.min': '"password" length must be at least 6 characters long',
   }),
 });
