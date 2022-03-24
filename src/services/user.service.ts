@@ -31,9 +31,11 @@ export const login = async (credentials: ILogin) => {
 };
 
 export const listUsers = async () => {
-  const users = await UserModel.find({}, '-_id name email');
+  const users = await UserModel.find({}, '_id name email');
 
-  return { code: 200, data: users };
+  const data = users.map((user) => ({ id: user._id, name: user.name, email: user.email }));
+
+  return { code: 200, data };
 };
 
 export const getUserById = async (id: string) => {
@@ -43,9 +45,11 @@ export const getUserById = async (id: string) => {
 };
 
 export const searchUsersByName = async (name: string) => {
-  const users = await UserModel.find({ name: new RegExp(name, 'i') }, '-_id name email');
+  const users = await UserModel.find({ name: new RegExp(name, 'i') }, '_id name email');
 
-  return { code: 200, data: users };
+  const data = users.map((user) => ({ id: user._id, name: user.name, email: user.email }));
+
+  return { code: 200, data };
 };
 
 export const updateSelf = async (id: Types.ObjectId, data: IUpdateUser) => {
