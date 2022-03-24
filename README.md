@@ -109,8 +109,6 @@ Para encerrar a API basta executar o comando
 
 ### 3 - GET `/user/list`
 
-- Para utilizar este endpoint é necessário informar um token válido através do header `Authorization`.
-
 - Este endpoint permite listar todos usuários cadastrados na base de dados.
 
 - Uma resposta com status `200` será enviada contendo as informações no seguinte formato:
@@ -138,8 +136,6 @@ Para encerrar a API basta executar o comando
 
 ### 4 - GET `/user/:id`
 
-- Para utilizar este endpoint é necessário informar um token válido através do header `Authorization`.
-
 - Este endpoint permite trazer as informações de um usuário baseado no id passado na rota.
 
     ```http
@@ -157,8 +153,6 @@ Para encerrar a API basta executar o comando
 
 
 ### 5 - GET `/user/search`
-
-- Para utilizar este endpoint é necessário informar um token válido através do header `Authorization`.
 
 - Este endpoint permite buscar e listar todos usuários que possuam em seu nome a string informada na query `name`. Caso a query não seja informada, todos os usuários serão retornados.
 
