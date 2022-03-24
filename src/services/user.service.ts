@@ -58,10 +58,19 @@ export const searchUsersByName = async (name: string) => {
 
 export const updateSelf = async (id: Types.ObjectId, data: IUpdateUser) => {
   const updateResponse = await UserModel.findByIdAndUpdate(id, data).catch((e) => {
-    if (e.message.includes('duplicate key error')) return null;
+    if (e.message.includes('duplicate key error')) return 'conflict';
   });
 
-  if (!updateResponse) return { code: 409, data: { message: 'This email is already registered' } };
+  if (!updateResponse) {
+    return {
+      code: 401,
+      data: { message: 'There is a problem with your authentication, please log in again' },
+    };
+  }
+
+  if (updateResponse === 'conflict') {
+    return { code: 409, data: { message: 'This email is already registered' } };
+  }
 
   return { code: 200, data: { message: 'User successfully updated' } };
 };
