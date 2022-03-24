@@ -18,20 +18,6 @@ export const user = Joi.object({
   }),
 });
 
-export const login = Joi.object({
-  email: Joi.string().email().required().messages({
-    'string.base': '"email" must be a string',
-    'string.email': '"email" must be a valid email',
-    'string.empty': '"email" is not allowed to be empty',
-    'any.required': '"email" is required',
-  }),
-  password: Joi.string().required().messages({
-    'string.base': '"password" must be a string',
-    'string.empty': '"password" is not allowed to be empty',
-    'any.required': '"password" is required',
-  }),
-});
-
 export const updateUser = Joi.object({
   email: Joi.string().email().messages({
     'string.base': '"email" must be a string',
