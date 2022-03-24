@@ -14,8 +14,6 @@ UserRouter.post( // LOG IN WITH USER CREDENTIALS (EMAIL & PASSWORD)
   UserControllers.login,
 );
 
-UserRouter.use(auth); // AUTHENTICATE REQUESTS. FROM HERE ALL ENDPOINTS REQUIRE JWT TOKEN
-
 UserRouter.get( // LIST ALL USERS
   '/list',
   UserControllers.listUsers,
@@ -30,6 +28,8 @@ UserRouter.get( // GET AN USER BASED ON ID PROVIDED IN URL
   '/:id',
   UserControllers.getUserById,
 );
+
+UserRouter.use(auth); // AUTHENTICATE REQUESTS. FROM HERE ALL ENDPOINTS REQUIRE JWT TOKEN
 
 UserRouter.put( // UPDATE USER INFORMATION (USER ID COMES FROM JWT TOKEN PAYLOAD)
   '/update',
