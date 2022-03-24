@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  api:
+    build: .
+    container_name: ts-mongoose-api
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - MONGO_URI=mongodb://db:27017/ts-mongoose-api
+    ports: 
+      - "3000:3000" # Altere a porta da esquerda caso a 3000 da sua maquina esteja ocupada.
+    restart: always
+
+  db:
+    image: mongo
+    container_name: ts-mongoose-db
+    restart: always
+    healthcheck:
+      test: echo 'db.runCommand({serverStatus:1}).ok' | mongo --quiet | grep 1
+      timeout: 10s
+      retries: 5
+      start_period: 5s
