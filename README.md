@@ -46,7 +46,7 @@ Suba a orquestração de containers
   docker-compose up -d
 ```
 
-Para encerrar a API basta executar o comando
+Para encerrar a API basta executar
 
 ```bash
   docker-compose down
