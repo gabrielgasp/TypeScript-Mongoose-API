@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const connect = async () => {
   try {
-    const dbUri = process.env.MONGO_URI || 'mongodb://localhost:27017/ts-mongoose-practice';
+    const dbUri = process.env.MONGO_URI || 'mongodb://localhost:27017/ts-mongoose-api';
     await mongoose.connect(dbUri);
     console.log('Database connection established');
   } catch (e) {
