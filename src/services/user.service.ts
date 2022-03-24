@@ -39,7 +39,11 @@ export const listUsers = async () => {
 };
 
 export const getUserById = async (id: string) => {
-  const user = await UserModel.findById(id, 'name email');
+  const user = await UserModel.findById(id, 'name email')
+    .catch((error) => {
+      if (error.message.includes('Cast to ObjectId failed')) return null;
+      throw error;
+    });
 
   return user ? { code: 200, data: user } : { code: 404, data: { message: 'User does not exist' } };
 };
