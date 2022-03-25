@@ -1,13 +1,14 @@
 
 # TypeScript Mongoose API
 
-Este projeto é uma API simples para fazer um CRUD de usuários com login. A intenção foi fazer uma API
+Este projeto é uma API simples de CRUD de usuários com login e autenticação desenvolvida na arquitetura **MSC**. A intenção foi fazer uma API
 com um tema simples para focar no aprendizado de novas stacks.
+
+A API pode ser acessada [aqui](https://typescript-mongoose-api.herokuapp.com/user/list).
 
 
 ## Stacks utilizadas
 
-- MSC Pattern
 - Node.js
 - TypeScript
 - Express
