@@ -31,15 +31,13 @@ export const login = async (credentials: ILogin) => {
 };
 
 export const listUsers = async () => {
-  const users = await UserModel.find({}, '_id name email');
+  const users = await UserModel.find({}, 'name email');
 
-  const data = users.map((user) => ({ id: user._id, name: user.name, email: user.email }));
-
-  return { code: 200, data };
+  return { code: 200, data: users };
 };
 
 export const getUserById = async (id: string) => {
-  const user = await UserModel.findById(id, '-_id name email')
+  const user = await UserModel.findById(id, 'name email')
     .catch((e) => {
       if (e.message.includes('Cast to ObjectId failed')) return null;
       throw e;
@@ -49,11 +47,9 @@ export const getUserById = async (id: string) => {
 };
 
 export const searchUsersByName = async (name: string) => {
-  const users = await UserModel.find({ name: new RegExp(name, 'i') }, '_id name email');
+  const users = await UserModel.find({ name: new RegExp(name, 'i') }, 'name email');
 
-  const data = users.map((user) => ({ id: user._id, name: user.name, email: user.email }));
-
-  return { code: 200, data };
+  return { code: 200, data: users };
 };
 
 export const updateSelf = async (id: Types.ObjectId, data: IUpdateUser) => {
