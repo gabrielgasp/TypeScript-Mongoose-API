@@ -45,6 +45,13 @@ Suba a orquestração de containers
   docker-compose up -d
 ```
 
+A API estará pronta para uso quando a saída no seu terminal ficar assim
+
+```bash
+  Creating ts-mongoose-db ... done
+  Creating ts-mongoose-api ... done
+```
+
 Para encerrar a API basta executar o comando
 
 ```bash
